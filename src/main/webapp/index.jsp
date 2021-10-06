@@ -143,15 +143,22 @@
 
 <div id="content">
     <div id="flushLeft">
-        <form action="core.php" method="post" name="pointCheckForm">
+        <form action="controller" method="get" name="pointCheckForm">
             <div class="inputBlock">
                 <b>Изменение X:</b><label><input type="checkbox" name="coordinateX" checked onclick="changeCheckBoxBehavior(this)" value="-3"/>-3</label><label><input type="checkbox" name="coordinateX" onclick="changeCheckBoxBehavior(this)" value="-2"/>-2</label><label><input type="checkbox" name="coordinateX" onclick="changeCheckBoxBehavior(this)" value="-1"/>-1</label><label><input type="checkbox" name="coordinateX" onclick="changeCheckBoxBehavior(this)" value="0"/>0</label><label><input type="checkbox" name="coordinateX" onclick="changeCheckBoxBehavior(this)" value="1"/>1</label><label><input type="checkbox" name="coordinateX" onclick="changeCheckBoxBehavior(this)" value="2"/>2</label><label><input type="checkbox" name="coordinateX" onclick="changeCheckBoxBehavior(this)" value="3"/>3</label><label><input type="checkbox" name="coordinateX" onclick="changeCheckBoxBehavior(this)" value="4"/>4</label><label><input type="checkbox" name="coordinateX" onclick="changeCheckBoxBehavior(this)" value="5"/>5</label>
             </div>
             <div class="inputBlock">
-                <b>Изменение Y:</b><label data-validate="Обязательное поле"><input type="text" name="coordinateY" class="textField" pattern="(-?[0-2]\.\d*(?=[1-9])[1-9])|0|(-?[12])" required title="Число из промежутка (-3...3); разделитель целой и дробной части - точка (.); незначащие нули не писать!" autocomplete="off" autofocus/></label>
+                <b>Изменение Y:</b><label data-validate="Обязательное поле"><input type="text" name="coordinateY" class="textField" pattern="(-?[0-5]\.\d*(?=[1-9])[1-9])|0|(-?[1-4])" required title="Число из промежутка (-5...5); разделитель целой и дробной части - точка (.); незначащие нули не писать!" autocomplete="off" autofocus/></label>
             </div>
             <div class="inputBlock">
-                <b>Изменение R:</b><label><input type="checkbox" name="radius" checked onclick="changeCheckBoxBehavior(this)" value="1"/>1</label><label><input type="checkbox" name="radius" onclick="changeCheckBoxBehavior(this)" value="1.5"/>1.5</label><label><input type="checkbox" name="radius" onclick="changeCheckBoxBehavior(this)" value="2"/>2</label><label><input type="checkbox" name="radius" onclick="changeCheckBoxBehavior(this)" value="2.5"/>2.5</label><label><input type="checkbox" name="radius" onclick="changeCheckBoxBehavior(this)" value="3"/>3</label>
+                <b>Изменение R:</b>
+                <select name="radius">
+                    <%
+                        for (double i = 1; i <= 3; i += 0.5) {
+                            out.println("<option" + (i == 1 ? " selected " : " ") + "value=" + "\"" + i + "\">" + i + "</option>");
+                        }
+                    %>
+                </select>
             </div>
             <button class="submitButton" type="submit">Отправить</button>
         </form>
@@ -159,39 +166,11 @@
     <div id="flushRight">
         <img src="images/area.png" title="График" alt="График"/>
     </div>
-    <?php
-        if (isset($_SESSION['rows']))
-        {
-            echo "<table class='history'>";
-            echo "<thead><tr><th>Значение X</th><th>Значение Y</th><th>Значение R</th><th>Попадание</th><th>Дата и время</th><th>Длительность</th></tr></thead>";
-            echo "<tbody>";
-            foreach ($_SESSION['rows'] as $row)
-            {
-                echo $row;
-            }
-            echo "</tbody>";
-            echo "</table>";
-        }
-        else
-        {
-            echo "<div class='error'>История запросов пуста, поэтому таблица не загружена.</div>";
-        }
-    ?>
     <a href="#mainHeading" id="scrollUpButton" title="Наверх" hidden>?</a>
 </div>
 </body>
 </html>
 <script>
-    function changeCheckBoxBehavior(element)
-    {
-        let checkboxes = document.getElementsByName(element.name);
-        for (let i = 0; i < checkboxes.length; i++)
-        {
-            checkboxes[i].checked = false;
-        }
-        element.checked = true;
-    }
-
     window.addEventListener('scroll', function() {
         document.getElementById('scrollUpButton').hidden = scrollY < 30;
     });
