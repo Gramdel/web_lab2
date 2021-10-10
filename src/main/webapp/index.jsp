@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<jsp:useBean id="hb" class="beans.HistoryBean" scope="session"/>
 <!doctype html>
 <html lang="ru">
 <head>
@@ -152,13 +153,15 @@
             </div>
             <div class="inputBlock">
                 <b>Изменение R:</b>
-                <select name="radius">
-                    <%
-                        for (double i = 1; i <= 3; i += 0.5) {
-                            out.println("<option" + (i == 1 ? " selected " : " ") + "value=" + "\"" + i + "\">" + i + "</option>");
-                        }
-                    %>
-                </select>
+                <label>
+                    <select name="radius">
+                        <%
+                            for (double i = 1; i <= 3; i += 0.5) {
+                               out.println("<option" + (i == 1 ? " selected " : " ") + "value=" + "\"" + i + "\">" + i + "</option>");
+                            }
+                        %>
+                    </select>
+                </label>
             </div>
             <button class="submitButton" type="submit">Отправить</button>
         </form>
@@ -166,6 +169,11 @@
     <div id="flushRight">
         <img src="images/area.png" title="График" alt="График"/>
     </div>
+    <%
+        for (String s : hb.getHistory()) {
+            out.println(s+"</br>");
+        }
+    %>
     <a href="#mainHeading" id="scrollUpButton" title="Наверх" hidden>?</a>
 </div>
 </body>
