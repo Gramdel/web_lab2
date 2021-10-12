@@ -22,7 +22,12 @@ public class ControllerServlet extends HttpServlet {
         String radius = req.getParameter("radius");
 
         if (coordinateX == null || coordinateY == null || radius == null) {
+            resp.getWriter().print("<link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\"/>");
+            resp.getWriter().print("<div id=\"content\">");
+            resp.getWriter().print("<div class='error'>");
             resp.getWriter().print("Ошибка: один или несколько передаваемых праматеров не указаны!");
+            resp.getWriter().print("</div>");
+            resp.getWriter().print("</div>");
             resp.getWriter().close();
         } else {
             try {
@@ -41,13 +46,19 @@ public class ControllerServlet extends HttpServlet {
 
                 String error = "";
                 if (!allowedX.contains(x)) {
-                    error += "Ошибка в формате координаты x! Допустимые значения: все целые числа от -4 до 4 включительно</br>";
+                    error += "<div class='error'>";
+                    error += "Ошибка в формате координаты x! Допустимые значения:</br>все целые числа от -4 до 4 включительно</br>";
+                    error += "</div>";
                 }
                 if (y <= -5 || y >= 5) {
-                    error += "Ошибка в формате координаты y! Допустимые значения: все числа из промежутка (-5...5)</br>";
+                    error += "<div class='error'>";
+                    error += "Ошибка в формате координаты y! Допустимые значения:</br>все числа из промежутка (-5...5)</br>";
+                    error += "</div>";
                 }
                 if (!allowedR.contains(r)) {
-                    error += "Ошибка в формате радиуса! Допустимые значения: все числа от 1 до 3 включительно с шагом 0.5</br>";
+                    error += "<div class='error'>";
+                    error += "Ошибка в формате радиуса! Допустимые значения:</br>все числа от 1 до 3 включительно с шагом 0.5</br>";
+                    error += "</div>";
                 }
 
                 if (error.isEmpty()) {
@@ -57,11 +68,19 @@ public class ControllerServlet extends HttpServlet {
                     RequestDispatcher requestDispatcher = req.getRequestDispatcher("/check");
                     requestDispatcher.forward(req, resp);
                 } else {
+                    resp.getWriter().print("<link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\"/>");
+                    resp.getWriter().print("<div id=\"content\">");
                     resp.getWriter().print(error);
+                    resp.getWriter().print("</div>");
                     resp.getWriter().close();
                 }
             } catch (NumberFormatException e) {
-                resp.getWriter().print("Ошибка в формате: один или несколько переданных параметров не являются числом!");
+                resp.getWriter().print("<link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\"/>");
+                resp.getWriter().print("<div id=\"content\">");
+                resp.getWriter().print("<div class='error'>");
+                resp.getWriter().print("Ошибка в формате: один или несколько переданных параметров</br>не являются числом!");
+                resp.getWriter().print("</div>");
+                resp.getWriter().print("</div>");
                 resp.getWriter().close();
             }
         }

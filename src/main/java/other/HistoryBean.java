@@ -1,15 +1,15 @@
-package beans;
+package other;
 
 import java.util.ArrayList;
 
 public class HistoryBean {
-    private final ArrayList<String> history;
+    private final ArrayList<Point> history;
 
     public HistoryBean() {
         history = new ArrayList<>();
     }
 
-    public ArrayList<String> getHistory() {
+    public ArrayList<Point> getHistory() {
         return history;
     }
 }
