@@ -27,6 +27,7 @@ public class ControllerServlet extends HttpServlet {
             resp.getWriter().print("<div class='error'>");
             resp.getWriter().print("Ошибка: один или несколько передаваемых праматеров не указаны!");
             resp.getWriter().print("</div>");
+            resp.getWriter().print("<center><a href=\"index.jsp\">Назад к форме</a></center>");
             resp.getWriter().print("</div>");
             resp.getWriter().close();
         } else {
@@ -72,6 +73,7 @@ public class ControllerServlet extends HttpServlet {
                     resp.getWriter().print("<div id=\"content\">");
                     resp.getWriter().print(error);
                     resp.getWriter().print("</div>");
+                    resp.getWriter().print("<center><a href=\"index.jsp\">Назад к форме</a></center>");
                     resp.getWriter().close();
                 }
             } catch (NumberFormatException e) {
@@ -80,6 +82,7 @@ public class ControllerServlet extends HttpServlet {
                 resp.getWriter().print("<div class='error'>");
                 resp.getWriter().print("Ошибка в формате: один или несколько переданных параметров</br>не являются числом!");
                 resp.getWriter().print("</div>");
+                resp.getWriter().print("<center><a href=\"index.jsp\">Назад к форме</a></center>");
                 resp.getWriter().print("</div>");
                 resp.getWriter().close();
             }
