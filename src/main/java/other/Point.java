@@ -3,13 +3,13 @@ package other;
 import java.util.Date;
 
 public class Point {
-    int x;
+    double x;
     double y;
     double r;
     boolean isInArea;
     Date date;
 
-    public Point(int x, double y, double r, boolean isInArea) {
+    public Point(double x, double y, double r, boolean isInArea) {
         this.x = x;
         this.y = y;
         this.r = r;
@@ -17,7 +17,7 @@ public class Point {
         this.date = new Date();
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 

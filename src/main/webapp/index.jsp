@@ -111,84 +111,94 @@
     });
 
     let canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
     canvas.addEventListener('mouseup', function (e) {
-        let x = ((e.pageX - e.target.offsetLeft - 133)/36+0.01).toFixed(1);
-        let y = ((e.pageY - e.target.offsetTop - 133)/-36+0.005).toFixed(1);
-        console.log("x = "+x);
-        console.log("y = "+y);
-        console.log(" ");
+        let x = e.pageX - e.target.offsetLeft;
+        let y = e.pageY - e.target.offsetTop;
+        document.getElementById("hiddenField").value = ((x - 133)/36+0.01).toFixed(1);
+        document.getElementsByName("coordinateY")[0].value = ((y - 133)/-36+0.005).toFixed(1);
+        document.getElementById("pointCheckForm").submit();
     });
 
     function drawArea(r) {
-        let ctx = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "black";
+        context.lineWidth = 1;
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "black";
-        ctx.lineWidth = 1;
+        context.beginPath(); // оси
+        context.moveTo(132.5, 0);
+        context.lineTo(132.5, 264);
+        context.moveTo(128, 6);
+        context.lineTo(132.5, 0);
+        context.moveTo(137, 6);
+        context.lineTo(132.5, 0);
+        context.moveTo(0, 132.5);
+        context.lineTo(264, 132.5);
+        context.moveTo(258, 137);
+        context.lineTo(264, 132.5);
+        context.moveTo(258, 128);
+        context.lineTo(264, 132.5);
+        context.stroke();
 
-        ctx.beginPath(); // оси
-        ctx.moveTo(132.5, 0);
-        ctx.lineTo(132.5, 264);
-        ctx.moveTo(128, 6);
-        ctx.lineTo(132.5, 0);
-        ctx.moveTo(137, 6);
-        ctx.lineTo(132.5, 0);
-        ctx.moveTo(0, 132.5);
-        ctx.lineTo(264, 132.5);
-        ctx.moveTo(258, 137);
-        ctx.lineTo(264, 132.5);
-        ctx.moveTo(258, 128);
-        ctx.lineTo(264, 132.5);
-        ctx.stroke();
+        context.font = "11pt Calibri";
+        context.fillText("Y", 120, 11);
+        context.fillText("X", 255, 148);
 
-        ctx.font = "11pt Calibri";
-        ctx.fillText("Y", 120, 11);
-        ctx.fillText("X", 255, 148);
+        context.fillStyle = "#4a98ff";
+        context.fillRect(132.5-r*18-1.5, 133, r*18+1, r*18*2+1); // прямоугольник
 
-        ctx.fillStyle = "#4a98ff";
-        ctx.fillRect(132.5-r*18-1.5, 133, r*18+1, r*18*2+1); // прямоугольник
+        context.beginPath(); // треугольник
+        context.moveTo(133, 132);
+        context.lineTo(133+r*18+1.5, 132);
+        context.lineTo(133, 132-r*18);
+        context.lineTo(133, 132);
+        context.fill();
 
-        ctx.beginPath(); // треугольник
-        ctx.moveTo(133, 132);
-        ctx.lineTo(133+r*18+1.5, 132);
-        ctx.lineTo(133, 132-r*18);
-        ctx.lineTo(133, 132);
-        ctx.fill();
-
-        ctx.beginPath(); // круг
-        ctx.arc(131.5, 132, r*18, -Math.PI/2, -Math.PI, true);
-        ctx.lineTo(132, 132);
-        ctx.lineTo(132, 132-r*18);
-        ctx.fill();
+        context.beginPath(); // круг
+        context.arc(131.5, 132, r*18, -Math.PI/2, -Math.PI, true);
+        context.lineTo(132, 132);
+        context.lineTo(132, 132-r*18);
+        context.fill();
 
         for(let i = 1; i <= 6; i++) {
-            ctx.beginPath();
-            ctx.moveTo(132.5+i*18+1, 130); // насечки по x вправо
-            ctx.lineTo(132.5+i*18+1, 135);
-            ctx.moveTo(132.5-i*18-1, 130); // насечки по x влево
-            ctx.lineTo(132.5-i*18-1, 135);
-            ctx.moveTo(130, 132.5+i*18+1); // насечки по y вниз
-            ctx.lineTo(135, 132.5+i*18+1);
-            ctx.moveTo(130, 132.5-i*18-1); // насечки по y вверх
-            ctx.lineTo(135, 132.5-i*18-1);
-            ctx.stroke();
+            context.beginPath();
+            context.moveTo(132.5+i*18+1, 130); // насечки по x вправо
+            context.lineTo(132.5+i*18+1, 135);
+            context.moveTo(132.5-i*18-1, 130); // насечки по x влево
+            context.lineTo(132.5-i*18-1, 135);
+            context.moveTo(130, 132.5+i*18+1); // насечки по y вниз
+            context.lineTo(135, 132.5+i*18+1);
+            context.moveTo(130, 132.5-i*18-1); // насечки по y вверх
+            context.lineTo(135, 132.5-i*18-1);
+            context.stroke();
         }
 
-        ctx.fillStyle = "black";
+        context.fillStyle = "black";
 
-        ctx.fillText("R", 120, 132.5-r*18*2+2); // R по y
+        context.fillText("R", 120, 132.5-r*18*2+2); // R по y
         if (r !== "1.0") {
-            ctx.fillText("0.5R", 120-19, 132.5-r*18+2);
-            ctx.fillText("0.5R", 120-19, 132.5+r*18+4);
+            context.fillText("0.5R", 120-19, 132.5-r*18+2);
+            context.fillText("0.5R", 120-19, 132.5+r*18+4);
         }
-        ctx.fillText("R", 120, 132.5+r*18*2+4);
+        context.fillText("R", 120, 132.5+r*18*2+4);
 
-        ctx.fillText("R", 132.5-r*18*2-5, 148); // R по x
+        context.fillText("R", 132.5-r*18*2-5, 148); // R по x
         if (r !== "1.0") {
-            ctx.fillText("0.5R", 132.5 - r * 18 - 10, 148);
-            ctx.fillText("0.5R", 132.5 + r * 18 - 8, 148);
+            context.fillText("0.5R", 132.5 - r * 18 - 10, 148);
+            context.fillText("0.5R", 132.5 + r * 18 - 8, 148);
         }
-        ctx.fillText("R", 132.5 + r * 18 * 2 - 3, 148);
+        context.fillText("R", 132.5 + r * 18 * 2 - 3, 148);
+
+        drawPointsFromHistory(); // заполняем точки из истории
+    }
+
+    function drawPointsFromHistory(){
+        <%
+            out.println("context.fillStyle = \"#FF0000\";");
+            for (Point p : hb.getHistory()) {
+                out.println("context.fillRect("+(p.getX()*36+133-1.5)+", "+(p.getY()*-36+133-2)+", 2, 2);");
+            }
+        %>
     }
     drawArea(3);
 

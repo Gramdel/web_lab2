@@ -32,12 +32,12 @@ public class ControllerServlet extends HttpServlet {
             resp.getWriter().close();
         } else {
             try {
-                int x = Integer.parseInt(coordinateX);
+                double x = Double.parseDouble(coordinateX);
                 double y = Double.parseDouble(coordinateY);
                 double r = Double.parseDouble(radius);
 
-                ArrayList<Integer> allowedX = new ArrayList<>();
-                for (int i = -4; i <= 4; i++) {
+                ArrayList<Double> allowedX = new ArrayList<>();
+                for (double i = -4; i <= 4; i++) {
                     allowedX.add(i);
                 }
                 ArrayList<Double> allowedR = new ArrayList<>();

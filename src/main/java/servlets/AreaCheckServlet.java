@@ -22,7 +22,7 @@ public class AreaCheckServlet extends HttpServlet {
         HistoryBean hb = (HistoryBean) req.getSession().getAttribute("hb");
 
         if (req.getAttribute("x") != null && req.getAttribute("y") != null && req.getAttribute("r") != null) {
-            int x = (Integer) req.getAttribute("x");
+            double x = (Double) req.getAttribute("x");
             double y = (Double) req.getAttribute("y");
             double r = (Double) req.getAttribute("r");
             boolean isInArea = pointIsInTriangle(x, y, r) || pointIsInCircle(x, y, r) || pointIsInRectangle(x, y, r);
@@ -49,15 +49,15 @@ public class AreaCheckServlet extends HttpServlet {
         resp.getWriter().close();
     }
 
-    private boolean pointIsInTriangle(int x, double y, double r) {
+    private boolean pointIsInTriangle(double x, double y, double r) {
         return (y <= r / 2 - x) && (y >= 0) && (x >= 0);
     }
 
-    private boolean pointIsInCircle(int x, double y, double r) {
+    private boolean pointIsInCircle(double x, double y, double r) {
         return (x * x + y * y <= r * r / 4) && (y >= 0) && (x <= 0);
     }
 
-    private boolean pointIsInRectangle(int x, double y, double r) {
+    private boolean pointIsInRectangle(double x, double y, double r) {
         return (y >= -r) && (y <= 0) && (x >= -r / 2) && (x <= 0);
     }
 }
