@@ -44,6 +44,7 @@ public class AreaCheckServlet extends HttpServlet {
             resp.getWriter().print("</tbody>");
             resp.getWriter().print("</table>");
         }
+        resp.getWriter().print("<center><a href=\"index.jsp\">Назад к форме</a></center>");
         resp.getWriter().print("</div>");
         resp.getWriter().close();
     }
